@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  --width-device: 1700px;
+}
+
+body {
+  --color-red: hsl(0, 90%, 49%);
+  margin: 0;
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 2rem;
+  line-height: 2rem;
+  letter-spacing: 0.1rem;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  height: 100vh;
+  width: 100%;
+}
+
+@media screen and (max-width: 1250px) {
+  body {
+    --width-device: 1250px;
+  }
+}
+@media screen and (max-width: 768px) {
+  body {
+    --width-device: 768px;
+  }
+}
+
+body[data-theme='light'] {
+  --color-text-primary: hsl(0, 0%, 2%);
+  --color-bg-primary: rgb(255, 255, 255);
+}
+
+body[data-theme='dark'] {
+  --color-text-primary: hsl(0, 0%, 100%);
+  --color-bg-primary: hsl(0, 0%, 1%);
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-text-secondary);
+  line-height: 4rem;
+  letter-spacing: 0.2rem;
+}
+h1 {
+  font-size: 3.5rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-red);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+p {
+  color: var(--color-text-secondary);
+  line-height: 3rem;
+}
+
+.drawer_animation-enter {
+  transform: translateX(-100%);
+}
+.drawer_animation-enter-active {
+  transform: translateX(0%);
+  transition: all 500ms;
+}
+.drawer_animation-exit {
+  transform: translateX(0%);
+}
+.drawer_animation-exit-active {
+  transform: translateX(-100%);
+
+  transition: all 500ms;
+}

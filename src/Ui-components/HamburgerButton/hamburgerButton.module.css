@@ -1,0 +1,106 @@
+.hamburger-container-large {
+  height: 5rem;
+  width: 5rem;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.hamburger-container-small {
+  height: 3rem;
+  width: 3rem;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.hamburger-container-large:hover .hamburger-icon-large::before {
+  top: -1.2rem;
+}
+
+.hamburger-container-large:hover .hamburger-icon-large::after {
+  top: 1.2rem;
+}
+
+.hamburger-container-small:hover .hamburger-icon-small::before {
+  top: -0.8rem;
+}
+
+.hamburger-container-small:hover .hamburger-icon-small::after {
+  top: 0.8rem;
+}
+
+.hamburger-input {
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.hamburger-icon-large,
+.hamburger-icon-large::before,
+.hamburger-icon-large::after {
+  width: 5rem;
+  height: 0.4rem;
+  background-color: var(--color-text-primary);
+  display: inline-block;
+  content: '';
+  position: absolute;
+  left: 0;
+  transition: all 0.3s;
+  z-index: -1;
+}
+
+.hamburger-icon-small,
+.hamburger-icon-small::before,
+.hamburger-icon-small::after {
+  width: 3rem;
+  height: 0.2rem;
+  background-color: var(--color-text-primary);
+  display: inline-block;
+  content: '';
+  position: absolute;
+  left: 0;
+  transition: all 0.3s;
+  z-index: -1;
+}
+
+.hamburger-icon-large::before {
+  top: -1rem;
+}
+
+.hamburger-icon-large::after {
+  top: 1rem;
+}
+
+.hamburger-icon-small::before {
+  top: -0.8rem;
+}
+
+.hamburger-icon-small::after {
+  top: 0.8rem;
+}
+
+.hamburger-input:checked + .hamburger-icon-large,
+.hamburger-input:checked + .hamburger-icon-small {
+  background-color: transparent;
+}
+
+.hamburger-input:checked + .hamburger-icon-large::before,
+.hamburger-input:checked + .hamburger-icon-small::before {
+  top: 0;
+  transform: rotate(135deg);
+}
+
+.hamburger-input:checked + .hamburger-icon-large::after,
+.hamburger-input:checked + .hamburger-icon-small::after {
+  top: 0;
+  transform: rotate(-135deg);
+}

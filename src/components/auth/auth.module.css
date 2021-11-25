@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 70%;
+  border: 1px solid #ccc;
+  -webkit-box-shadow: 0px 2px 5px 2px var(--color-text-primary);
+  box-shadow: 0px 2px 5px 2px var(--color-text-primary);
+}
+
+.container-desktop,
+.container-tablet {
+  width: 65%;
+}
+
+.container-mobile {
+  width: 90%;
+}
+
+.buttons {
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.inner {
+  display: flex;
+  height: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+
+.input {
+  margin-top: 10rem;
+  margin-bottom: 5rem;
+}
+
+.inputs {
+  margin-bottom: 5rem;
+}
+.submit {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.eye {
+  fill: var(--color-text-primary);
+
+  position: absolute;
+}
+
+.eye-desktop {
+  width: 4rem;
+  height: 4rem;
+  top: -1rem;
+  left: 90%;
+}
+
+.eye-tablet {
+  width: 3rem;
+  height: 3rem;
+  top: -0.5rem;
+  left: 90%;
+}
+
+.eye-mobile {
+  width: 3rem;
+  height: 3rem;
+  top: -0.5rem;
+  left: 80%;
+}
+
+.password {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+}
+.passwordConfirm {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+}

@@ -1,0 +1,9 @@
+.container_backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(71, 70, 70, 0.692);
+  z-index: 50;
+}

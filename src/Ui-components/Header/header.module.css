@@ -1,0 +1,108 @@
+.header_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: sticky;
+  top: 0;
+}
+
+.header_container-desktop {
+  height: 6rem;
+}
+
+.header_container-tablet {
+  height: 5rem;
+}
+
+.header_container-mobile {
+  height: 4rem;
+}
+
+.innerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-text-primary);
+  padding: 0 1rem;
+}
+
+.innerContainer-desktop {
+  height: 6rem;
+}
+
+.innerContainer-tablet {
+  height: 5rem;
+}
+
+.innerContainer-mobile {
+  height: 5rem;
+}
+
+.left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.left_input {
+  display: flex;
+  margin-left: 1rem;
+  color: var(--color-text-primary);
+  position: relative;
+}
+
+.search {
+  fill: var(--color-text-primary);
+  width: 2.5rem;
+  height: 2.5rem;
+  top: 0;
+  position: absolute;
+}
+
+.search-desktop {
+  left: 45rem;
+}
+
+.search-tablet {
+  left: 30rem;
+}
+
+.search-mobile {
+  left: 16rem;
+  top: -0.2rem;
+}
+
+.logo {
+  fill: var(--color-text-primary);
+  margin-right: 1rem;
+}
+
+.user {
+  fill: var(--color-text-primary);
+  margin-left: 1rem;
+  height: 4rem;
+}
+
+.logo-desktop {
+  width: 4rem;
+  margin-bottom: -1rem;
+}
+
+.logo-tablet {
+  width: 3.5rem;
+  margin-bottom: -0.5rem;
+}
+
+.logo-mobile {
+  width: 3rem;
+}
+
+.header_right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: auto;
+}
