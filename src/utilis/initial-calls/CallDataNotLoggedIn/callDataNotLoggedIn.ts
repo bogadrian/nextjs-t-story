@@ -17,10 +17,9 @@ export const callDataNotLoggedIn = async () => {
     return { logged: false, data: response.data };
   } catch (err: unknown) {
     return {
-      logged: false,
+      logged: true,
       data: {
-        message: (err as { response: { statusText: string } })?.response
-          ?.statusText,
+        message: (err as { response: { data: string } })?.response?.data,
         status: (err as { response: { status: number } })?.response?.status
       }
     };

@@ -1,6 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import { ServerError } from '../../src/utilis/errors';
 
 const commonHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -9,7 +11,7 @@ const commonHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const instance = (axios as any)[method];
 
   try {
-    const { data: resData, headers: returnedHeaders } = await instance(
+    const response = await instance(
       url,
       { data },
       {
@@ -20,13 +22,11 @@ const commonHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     );
 
-    Object.entries(returnedHeaders).forEach(keyArr =>
-      res.setHeader(keyArr[0], keyArr[1] as string)
-    );
-
-    res.json({ resData });
+    res.json({ data: response.data });
   } catch (err) {
-    res.status(500).json(err);
+    res
+      .status((err as AxiosError<any>)?.response?.data.statusCode)
+      .json((err as AxiosError<any>)?.response?.data.message);
   }
 };
 

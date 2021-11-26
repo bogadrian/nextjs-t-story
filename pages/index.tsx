@@ -20,8 +20,6 @@ import { IUser } from '../custom-types';
 import { isLoggedIn } from '../src/recoil';
 import { useRecoilState } from 'recoil';
 
-import { Button } from '../src/Ui-components/Button/Button';
-
 interface Props {
   data: {
     response: any;
@@ -36,7 +34,7 @@ const Home: NextPage<Props> = ({ data }) => {
 
   const [value, setValue] = useState<string>('');
 
-  console.log('data in home', response, logged);
+  console.log('data in home', response.data, logged);
 
   useEffect(() => {
     if (response?.data?.status && response?.data?.status !== 200) {
@@ -78,6 +76,7 @@ const Home: NextPage<Props> = ({ data }) => {
         if (data) {
           const { user } = data as { user: IUser };
           if (user) {
+            console.log('gggg', user);
             localStorage.setItem('user', JSON.stringify(user));
           }
         }

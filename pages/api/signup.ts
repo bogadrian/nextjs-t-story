@@ -11,10 +11,10 @@ const signupHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     const data = await axios.post(`${externUrl}/auth/signup`, body, {
       headers: { ContentType: 'application/json' }
     });
-
-    res.json(data.data);
-  } catch (err: AxiosError | unknown) {
-    res.json((err as AxiosError)?.response?.data);
+  } catch (err) {
+    res
+      .status((err as AxiosError<any>)?.response?.data.statusCode)
+      .json((err as AxiosError<any>)?.response?.data.message);
   }
 };
 

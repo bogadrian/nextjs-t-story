@@ -13,6 +13,7 @@ import { Button } from '../../../Ui-components/Button/Button';
 import { Spinner } from '../../../Ui-components/Spinner';
 import { Svg } from '../../../Ui-components/assets/svg/Svg';
 import { toast } from 'react-toastify';
+
 const baseUrl = process.env.NEXT_INTERN_URL;
 
 import styles from '../auth.module.css';

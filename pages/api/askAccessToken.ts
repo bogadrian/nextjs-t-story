@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isRefreshStillValid } from '../../src/utilis/isRefreshStillValid';
@@ -32,8 +32,10 @@ const askAccessToken = async (req: NextApiRequest, res: NextApiResponse) => {
     } else {
       res.status(403).json({ status: 'failure' });
     }
-  } catch (error) {
-    res.status(404).json({ status: 'error' });
+  } catch (err) {
+    res
+      .status((err as AxiosError<any>)?.response?.data.statusCode)
+      .json((err as AxiosError<any>)?.response?.data.message);
   }
 };
 

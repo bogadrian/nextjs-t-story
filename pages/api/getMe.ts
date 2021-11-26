@@ -21,19 +21,13 @@ const getMeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     });
 
-    const { userRes: user } = data as { userRes: IUser };
+    const { user } = data as { user: IUser };
 
     res.json({ user });
-  } catch (err: AxiosError | unknown) {
+  } catch (err) {
     res
-      .status(
-        ((err as AxiosError)?.response?.data as { statusCode: number })
-          ?.statusCode
-      )
-      .json({
-        message: ((err as AxiosError)?.response?.data as { message: string })
-          ?.message
-      });
+      .status((err as AxiosError<any>)?.response?.data.statusCode)
+      .json((err as AxiosError<any>)?.response?.data.message);
   }
 };
 

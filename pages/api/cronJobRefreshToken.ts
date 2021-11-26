@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -46,7 +46,9 @@ const cronJobRefreshToken = async (
       res.json({ status: 'waiting for a new refresh token' });
     }
   } catch (err) {
-    res.json(err);
+    res
+      .status((err as AxiosError<any>)?.response?.data.statusCode)
+      .json((err as AxiosError<any>)?.response?.data.message);
   }
 };
 

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isRefreshStillValid } from '../../src/utilis/isRefreshStillValid';
@@ -50,8 +50,10 @@ const cronJobAccessToken = async (
     }
 
     res.json({ accessToken });
-  } catch (err: unknown) {
-    res.json(err);
+  } catch (err) {
+    res
+      .status((err as AxiosError<any>)?.response?.data.statusCode)
+      .json((err as AxiosError<any>)?.response?.data.message);
   }
 };
 

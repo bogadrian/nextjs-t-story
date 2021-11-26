@@ -42,16 +42,10 @@ const loginHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     res.json({ user });
-  } catch (err: AxiosError | unknown) {
+  } catch (err) {
     res
-      .status(
-        ((err as AxiosError)?.response?.data as { statusCode: number })
-          ?.statusCode
-      )
-      .json({
-        message: ((err as AxiosError)?.response?.data as { message: string })
-          ?.message
-      });
+      .status((err as AxiosError<any>)?.response?.data.statusCode)
+      .json((err as AxiosError<any>)?.response?.data.message);
   }
 };
 

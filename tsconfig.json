@@ -22,7 +22,8 @@
     "src/utilis/initial-calls/CallDataNotLoggedIn",
     "src/utilis/initial-calls/callDataLoggedIn",
     "src/utilis/initial-calls/callDataLoggedIn",
-    "src/utilis/initial-calls/CallDataNotLoggedIn"
+    "src/utilis/initial-calls/CallDataNotLoggedIn",
+    "src/utilis/errors"
   ],
   "exclude": ["node_modules"]
 }

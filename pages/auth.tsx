@@ -11,6 +11,7 @@ interface Props {
 const Auth: React.FC<Props> = () => {
   const isUserLoggedIn = useRecoilValue(isLoggedIn);
 
+  console.log('is user logged in', isUserLoggedIn);
   return (
     <div className={styles.container}>
       {isUserLoggedIn ? <UserComp /> : <AuthComp />}
