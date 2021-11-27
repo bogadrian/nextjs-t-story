@@ -7,6 +7,7 @@ interface Props {
   type: string;
   size: string;
   invalid?: boolean;
+  disabled?: boolean;
 }
 
 export const Input: React.FC<Props> = ({
@@ -15,7 +16,8 @@ export const Input: React.FC<Props> = ({
   value,
   size,
   type,
-  invalid
+  invalid,
+  disabled
 }) => {
   return (
     <div className={`${styles['group']} ${styles[`group-${size}`]}`}>
@@ -24,6 +26,7 @@ export const Input: React.FC<Props> = ({
         className={`${styles[`form-input`]} ${styles[`form-input-${size}`]}`}
         onChange={handleChange}
         style={invalid ? { borderBottom: '1px solid red' } : {}}
+        disabled={disabled}
       />
       {label ? (
         <label

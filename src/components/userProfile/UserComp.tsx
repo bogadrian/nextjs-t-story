@@ -41,15 +41,22 @@ export const UserComp: React.FC = () => {
     }
   };
   return (
-    <div className={styles.container}>
-      <Button
-        size={device === 'desktop' ? 'large' : 'small'}
-        outline
-        label="Signout"
-        onClick={signOut}
-        type="submit"
-      />
-      The user component{' '}
-    </div>
+    <>
+      <div className={styles.container}>
+        <Button
+          size={device === 'desktop' ? 'large' : 'small'}
+          outline
+          label="Signout"
+          onClick={signOut}
+        />
+        <Button
+          size={device === 'desktop' ? 'large' : 'small'}
+          outline
+          label="Change Password"
+          onClick={() => router.push('/newPassword')}
+        />
+        The user component{' '}
+      </div>
+    </>
   );
 };

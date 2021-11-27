@@ -18,7 +18,7 @@ import { useInterval } from '../src/hooks';
 import { IUser } from '../custom-types';
 
 import { isLoggedIn } from '../src/recoil';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 interface Props {
   data: {
@@ -29,7 +29,7 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({ data }) => {
-  const [, setIsLogged] = useRecoilState(isLoggedIn);
+  const setIsLogged = useSetRecoilState(isLoggedIn);
   const { response, expiresRefresh, logged } = data;
 
   const [value, setValue] = useState<string>('');

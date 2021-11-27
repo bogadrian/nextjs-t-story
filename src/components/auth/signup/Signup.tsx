@@ -44,6 +44,7 @@ export const Signup: React.FC<Props> = ({ device, loginAfterSignUp }) => {
         { headers: { accept: '*/*', ContentType: 'application/json' } }
       );
 
+      console.log('eeeeee', res.data);
       if (
         res?.data &&
         (res.data as { message: string }).message === 'success'
@@ -63,6 +64,7 @@ export const Signup: React.FC<Props> = ({ device, loginAfterSignUp }) => {
         });
       }
     } catch (err) {
+      console.log('wwwww', err);
       reset();
       toast.error(
         `Error:

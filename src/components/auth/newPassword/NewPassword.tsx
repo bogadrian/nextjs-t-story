@@ -19,16 +19,13 @@ const baseUrl = process.env.NEXT_INTERN_URL;
 
 import styles from '../auth.module.css';
 
-interface Props {
-  token: string | string[] | undefined;
-}
-
 interface FormValues {
+  oldPassword: string;
   password: string;
   confirmPassword: string;
 }
 
-export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
+export const NewPassword: React.FC = () => {
   const router = useRouter();
   const device = useMediaQuery();
   const { handleSubmit, control, reset, watch } = useForm<FormValues>();
@@ -41,7 +38,7 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
   useEffect(() => {
     watch(val => {
       setTimeout(() => {
-        setNewPass(val.password);
+        setNewPass(val.oldPassword);
       }, 2000);
     });
   }, [watch]);
@@ -56,8 +53,7 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
             `${baseUrl}/api/sameLastPassword`,
             {
               password: newPass,
-              token,
-              url: 'auth/samePassword'
+              url: 'protected/newPassword'
             },
             {
               headers: { accept: '*/*', ContentType: 'application/json' }
@@ -89,7 +85,7 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
         }
       })();
     }
-  }, [token, newPass]);
+  }, [newPass]);
 
   const onSubmit = async (data: FormValues) => {
     setLoading(true);
@@ -98,8 +94,7 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
       const res: AxiosResponse<unknown, any> = await axios.post(
         `${baseUrl}/api/resetPassword`,
         {
-          password,
-          token
+          password
         },
         { headers: { accept: '*/*', ContentType: 'application/json' } }
       );
@@ -144,7 +139,7 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
             <div className={styles.password}>
               <Controller<FormValues>
                 control={control}
-                name="password"
+                name="oldPassword"
                 rules={{
                   required: true,
                   validate: v => {
@@ -160,7 +155,7 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <Input
                       handleChange={onChange}
-                      label="new password"
+                      label="old password"
                       type="text"
                       value={value}
                       size={device}
@@ -205,7 +200,42 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
                 )}
               />
             </div>
-
+            <div className={styles.password}>
+              <Controller<FormValues>
+                control={control}
+                name="password"
+                rules={{
+                  required: true,
+                  validate: v =>
+                    v.length >= 8 || 'Password must be a least 8 characters!'
+                }}
+                render={({
+                  field: { onChange, value },
+                  fieldState: { invalid, error }
+                }) => (
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <Input
+                      handleChange={onChange}
+                      label="password"
+                      type="text"
+                      value={value}
+                      size={device}
+                      invalid={invalid}
+                      disabled={passwordIsOk === 'true' ? false : true}
+                    />
+                    <p
+                      style={{
+                        fontSize: '1.5rem',
+                        color: 'red',
+                        marginTop: '-0.6rem'
+                      }}
+                    >
+                      {error?.message}
+                    </p>
+                  </div>
+                )}
+              />
+            </div>
             <div className={styles.password}>
               <Controller<FormValues>
                 control={control}
@@ -227,6 +257,7 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
                       value={value}
                       size={device}
                       invalid={invalid}
+                      disabled={passwordIsOk === 'true' ? false : true}
                     />
                     <p
                       style={{
@@ -241,7 +272,6 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
                 )}
               />
             </div>
-
             <div className={styles.submit}>
               <Button
                 size={device === 'desktop' ? 'large' : 'small'}

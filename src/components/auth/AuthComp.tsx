@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Login } from './login';
 import { Signup } from './signup';
 import { ForgotPassword } from './forgotPassword';
+
 import { Button } from '../../Ui-components/Button/Button';
 
 import { useMediaQuery } from '../../hooks';
@@ -27,8 +28,6 @@ export const AuthComp: React.FC<Props> = () => {
       mounted.current = false;
     };
   }, [router]);
-
-  console.log(mode);
 
   return (
     <>
@@ -79,6 +78,7 @@ export const AuthComp: React.FC<Props> = () => {
           />
         </>
       ) : null}
+  
     </>
   );
 };
