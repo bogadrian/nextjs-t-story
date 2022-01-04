@@ -1,4 +1,8 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
+import { accessToken } from '../src/utilis/initial-calls/callData';
+
+import { useInterval } from '../src/hooks';
+
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Hydrate } from 'react-query/hydration';
 import { RecoilRoot } from 'recoil';
@@ -7,6 +11,8 @@ import Head from 'next/head';
 import { Layout } from '../src/components/layout';
 import { useMediaQuery } from '../src/hooks';
 import { Header } from '../src/Ui-components/Header';
+
+import { useGetUser } from '../src/hooks/getUserFromLS';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -103,6 +109,19 @@ interface Props {
 const App: React.FC<Props & AppProps> = ({ Component, pageProps }) => {
   const [queryClient] = useState(() => new QueryClient());
   const device = useMediaQuery();
+  const user = useGetUser();
+
+  useInterval(() => {
+    (async () => {
+      await accessToken();
+    })();
+  }, 4.5 * 60 * 1000);
+
+  useEffect(() => {
+    (async () => {
+      await accessToken();
+    })();
+  }, []);
 
   return (
     <Fragment>
@@ -124,7 +143,7 @@ const App: React.FC<Props & AppProps> = ({ Component, pageProps }) => {
           <Hydrate state={pageProps.dehydratedState}>
             <Layout>
               <Header device={device} />
-              <Component {...pageProps} />{' '}
+              <Component {...pageProps} />
             </Layout>
             <ToastContainer
               position="top-right"

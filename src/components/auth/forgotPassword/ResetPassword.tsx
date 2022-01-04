@@ -41,7 +41,7 @@ export const ResetPasswordComp: React.FC<Props> = ({ token }) => {
   useEffect(() => {
     watch(val => {
       setTimeout(() => {
-        setNewPass(val.password);
+        setNewPass(val.password!);
       }, 2000);
     });
   }, [watch]);

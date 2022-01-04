@@ -1,11 +1,18 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { IUser } from '../../custom-types';
+
+import httpProxyMiddleware from 'next-http-proxy-middleware';
 
 const externUrl = process.env.NEXT_EXTERN_URL;
 
-const getMeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+export const config = {
+  api: {
+    bodyParser: false
+  }
+};
+
+const imageProfile = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const accessToken =
       req?.headers?.cookie
@@ -14,16 +21,21 @@ const getMeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         ?.split('=')[1]
         .trim() ?? '';
 
-    const { data } = await axios.get(`${externUrl}/user/getMe`, {
+    const axiosInstance = await axios.create({
+      baseURL: `${externUrl}/user/uploadUserPhoto`,
       headers: {
         Authorization: 'Bearer ' + accessToken,
-        'Content-Type': 'application/json'
+        'Content-Type': req.headers['content-type']!
       }
     });
 
-    const { user } = data as { user: IUser };
+    const response = await axiosInstance({
+      method: 'PATCH',
+      data: req
+    });
 
-    res.json({ user });
+    console.log(response.data);
+    res.json(response.data);
   } catch (err) {
     if (
       (err as AxiosError<any>) &&
@@ -38,4 +50,4 @@ const getMeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default getMeHandler;
+export default imageProfile;

@@ -1,17 +1,23 @@
+import { ChangeEvent, useState } from 'react';
+
 import axios, { AxiosResponse } from 'axios';
 import styles from './user.module.css';
 
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import { useMediaQuery } from '../../hooks';
 
 import { Button } from '../../Ui-components/Button/Button';
 import { toast } from 'react-toastify';
+import { getFontDefinitionFromManifest } from 'next/dist/server/font-utils';
 
 const baseUrl = process.env.NEXT_INTERN_URL;
 
 export const UserComp: React.FC = () => {
+  const router = useRouter();
   const device = useMediaQuery();
+
+  const [userPhoto, setUserPhoto] = useState('');
 
   const signOut = async () => {
     try {
@@ -28,7 +34,7 @@ export const UserComp: React.FC = () => {
         toast.success('Signout success', {
           position: toast.POSITION.TOP_RIGHT
         });
-        router.push('./auth');
+        router.push('/');
       }
     } catch (err) {
       toast.error(
@@ -40,6 +46,38 @@ export const UserComp: React.FC = () => {
       );
     }
   };
+
+  const handelUpload = async (e: ChangeEvent<any>): Promise<void> => {
+    const data = e.target.files[0];
+
+    const formData = new FormData();
+    formData.append('image-profile', data, data.name);
+
+    try {
+      const res: AxiosResponse = await axios.post(
+        `${baseUrl}/api/imageProfile`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            accept: 'application/json'
+          },
+          onDownloadProgress: progressEvent => {
+            // implement the progress
+            console.log(
+              Math.round((progressEvent.loaded / progressEvent.total) * 100) +
+                '%'
+            );
+          }
+        }
+      );
+      console.log(res.data);
+      setUserPhoto(res.data as string);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -54,6 +92,22 @@ export const UserComp: React.FC = () => {
           outline
           label="Change Password"
           onClick={() => router.push('/newPassword')}
+        />
+        <label className={styles.upload_container}>
+          <span className={styles.upload_label} aria-hidden="true">
+            Upload a photo
+          </span>
+          <input
+            type="file"
+            className={styles.upload_input}
+            onChange={e => handelUpload(e)}
+            accept="png, jpeg, jpg"
+          />
+        </label>
+        <img
+          src={userPhoto}
+          alt="userPhoto"
+          style={{ width: '20rem', height: '20rem' }}
         />
         The user component{' '}
       </div>

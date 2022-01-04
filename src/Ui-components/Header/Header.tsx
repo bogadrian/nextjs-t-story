@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './header.module.css';
+import Image from 'next/image';
+
+import { IUser } from '../../../custom-types';
 
 import { sideDrawerAtom } from '../../recoil/sideDrawerAtom';
+import axios, { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
 import { isLoggedIn } from '../../recoil';
 
@@ -14,14 +18,23 @@ import { Svg } from '../assets/svg/Svg';
 import { SideDrawer } from '../../components/sideDrawer';
 import { Backdrop } from '../../components/backdrop';
 
+import { useGetUser } from '../../hooks/getUserFromLS';
+
+
+
 interface Props {
   device: string;
+ 
 }
 export const Header: React.FC<Props> = ({ device }) => {
   const [value, setValue] = useState<string>('');
   const isLogged = useRecoilValue(isLoggedIn);
   const sideDrwaerState = useRecoilValue(sideDrawerAtom);
+  const [userPhoto, setUserPhoto] = useState<any>();
 
+  const user = useGetUser();
+
+  console.log('user photo', user.photo);
   return (
     <>
       {device !== 'desktop' && <SideDrawer />}
@@ -31,6 +44,10 @@ export const Header: React.FC<Props> = ({ device }) => {
           styles[`header_container-${device}`]
         }`}
       >
+        {user.photo && (
+          <Image src={user.photo} alt="aa" width={500} height={500} />
+        )}
+
         <div
           className={`${styles['innerContainer']} ${
             styles[`innerContainer-${device}`]
@@ -82,7 +99,7 @@ export const Header: React.FC<Props> = ({ device }) => {
                 </Link>
                 <Link href="/auth">
                   <a>
-                    {true ? (
+                    {!isLogged && !userPhoto ? (
                       <Svg
                         name="login"
                         classNames={`${styles['logo']} ${

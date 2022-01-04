@@ -8,13 +8,8 @@ import { AxiosResponse } from 'axios';
 
 import { IContext } from '../custom-types';
 import { toast } from 'react-toastify';
-import {
-  callData,
-  accessToken,
-  getMe
-} from '../src/utilis/initial-calls/callData';
+import { callData, getMe } from '../src/utilis/initial-calls/callData';
 
-import { useInterval } from '../src/hooks';
 import { IUser } from '../custom-types';
 
 import { isLoggedIn } from '../src/recoil';
@@ -66,6 +61,7 @@ const Home: NextPage<Props> = ({ data }) => {
     // });
   };
 
+  // todo. move this logic somehow in _app tsx. all the pages need to check if the user is logged in not only the index. what if the user stays on user page for longer then 5v minutes?
   useEffect(() => {
     if (!logged) {
       localStorage.setItem('user', JSON.stringify({}));
@@ -76,7 +72,6 @@ const Home: NextPage<Props> = ({ data }) => {
         if (data) {
           const { user } = data as { user: IUser };
           if (user) {
-            console.log('gggg', user);
             localStorage.setItem('user', JSON.stringify(user));
           }
         }
@@ -87,18 +82,6 @@ const Home: NextPage<Props> = ({ data }) => {
       setIsLogged(true);
     }
   }, [logged, setIsLogged]);
-
-  useInterval(() => {
-    (async () => {
-      await accessToken();
-    })();
-  }, 4.5 * 60 * 1000);
-
-  useEffect(() => {
-    (async () => {
-      await accessToken();
-    })();
-  }, []);
 
   useRefreshToken(expiresRefresh);
 

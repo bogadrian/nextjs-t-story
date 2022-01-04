@@ -6,3 +6,20 @@
   justify-content: center;
   align-items: center;
 }
+
+.upload_container {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.upload_input {
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  display: none;
+}
+
+.upload_label {
+  cursor: pointer;
+}

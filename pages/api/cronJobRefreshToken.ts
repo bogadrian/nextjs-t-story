@@ -50,7 +50,6 @@ const cronJobRefreshToken = async (
       (err as AxiosError<any>) &&
       (err as AxiosError<any>).code !== 'ECONNREFUSED'
     ) {
-      console.log('err', err);
       res
         .status((err as AxiosError<any>)?.response?.data.statusCode)
         .json((err as AxiosError<any>)?.response?.data.message);

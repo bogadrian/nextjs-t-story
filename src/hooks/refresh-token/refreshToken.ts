@@ -14,6 +14,7 @@ export const useRefreshToken = (expiresRefresh: number) => {
   useEffect(() => {
     //subtract 2 days
     const expirationDateMinus2Days = subDays(new Date(expiresRefresh), 2);
+
     //find if date now is after dateExpires minus 2 days
     const isNowAfter = isAfter(
       new Date(Date.now()),

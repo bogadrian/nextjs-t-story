@@ -41,7 +41,6 @@ export const callDataLoggedIn = async (
 
     return { logged: true, data: response.data };
   } catch (err: unknown) {
-    console.log('dddd', err as any);
     return {
       logged: true,
       data: {

@@ -1,11 +1,11 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { IUser } from '../../custom-types';
 
 const externUrl = process.env.NEXT_EXTERN_URL;
 
-const getMeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const getMyPhoto = async (req: NextApiRequest, res: NextApiResponse) => {
+  const key = req.body.key;
   try {
     const accessToken =
       req?.headers?.cookie
@@ -14,16 +14,17 @@ const getMeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         ?.split('=')[1]
         .trim() ?? '';
 
-    const { data } = await axios.get(`${externUrl}/user/getMe`, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-        'Content-Type': 'application/json'
+    const { data, headers } = await axios.get(
+      `${externUrl}/user/getMyPhoto/${key}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken
+        }
       }
-    });
+    );
 
-    const { user } = data as { user: IUser };
-
-    res.json({ user });
+    console.log(data);
+    res.send(data);
   } catch (err) {
     if (
       (err as AxiosError<any>) &&
@@ -38,4 +39,4 @@ const getMeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default getMeHandler;
+export default getMyPhoto;
